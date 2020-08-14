@@ -11,7 +11,6 @@ module.exports = {
     return response.json({ id })
   },
 
-  
   async index(request, response) {
     const { page = 1, perPage = 5 } = request.query;
     
@@ -26,4 +25,12 @@ module.exports = {
     
     return response.json(posts);
   },
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    await connection('posts').where('id', id).delete();
+
+    return response.status(204).send();
+  }
 }
