@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const moment = require('moment')
 
 module.exports = {
 
@@ -7,7 +8,7 @@ module.exports = {
       
     const [ count ] = await connection('posts').count();
   
-    const posts = await connection('posts') 
+    const posts = await connection('posts')
       .limit(perPage)
       .offset((page - 1) * perPage)
       .select(['*']);
@@ -33,7 +34,7 @@ module.exports = {
     const { title, description } = request.body
     const [ id ] = await connection('posts').insert({
       title,
-      description,
+      description
     })
 
     return response.json({ id })
@@ -47,12 +48,13 @@ module.exports = {
       .update({
         title,
         description,
+        updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
       });
 
     if(!affected) {
       return response.status(404).send();
     }
-    return response.json({ affected })
+    return response.send()
   },
 
   async delete(request, response) {
