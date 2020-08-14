@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 module.exports = {
 
   async index(request, response) {
-    const { page = 1, perPage = 5 } = request.query;
+    const { page = 1, perPage = 5 } = request.query
       
     const [ count ] = await connection('posts').count();
   
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   async select(request, response) {
-    const { id } = request.params;
+    const { id } = request.params
 
     const [ post ] = await connection('posts').where('id', id).select(['*']);
 
@@ -37,6 +37,22 @@ module.exports = {
     })
 
     return response.json({ id })
+  },
+
+  async update (request, response) {
+    const { id } = request.params
+    const { title, description } = request.body
+    const affected = await connection('posts')
+      .where({ id })
+      .update({
+        title,
+        description,
+      });
+
+    if(!affected) {
+      return response.status(404).send();
+    }
+    return response.json({ affected })
   },
 
   async delete(request, response) {
