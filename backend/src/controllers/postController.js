@@ -34,7 +34,9 @@ module.exports = {
     const { title, description } = request.body
     const [ id ] = await connection('posts').insert({
       title,
-      description
+      description,
+      created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
+      updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
     })
 
     return response.json({ id })
