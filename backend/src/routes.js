@@ -7,6 +7,7 @@ router.get('', function(req, res) {
   res.send('Hello World')
 })
 
-router.post('/post', PostController.create)
+router.post('/posts', PostController.create)
+router.get('/posts', PostController.index)
 
 module.exports = router;
