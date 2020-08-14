@@ -4,7 +4,8 @@ exports.up = function(knex) {
     table.string('title').notNullable()
     table.string('description').notNullable()
     table.string('image').nullable()
-    table.timestamps()
+    table.dateTime('created_at').notNullable().defaultTo(knex.fn.now())
+    table.dateTime('updated_at').notNullable().defaultTo(knex.fn.now())
   });
 };
     
