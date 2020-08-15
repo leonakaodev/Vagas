@@ -9,12 +9,10 @@ module.exports = {
     const { page, perPage, search, id } = request.query
 
     const countObj = connection(table)
-      .where('deleted_at',  null)
 
     const categoriesObj = connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
-      .where('deleted_at', null)
 
     if(id) {
       countObj.where('id', id)
@@ -73,12 +71,13 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
-    const hastPost = (await connection('post_categories')
+    const hasPost = (await connection('post_categories')
+      .innerJoin('posts', 'post_categories.post_id', 'posts.id')
       .where('category_id', id)
-      .whereNotNull('post_id')
+      .whereNull('posts.deleted_at')
       .first('post_id')) !== undefined
 
-    if(hastPost){
+    if(hasPost){
       return response.status(400).send({
         statusCode: 400,
         error: 'Bad Request',
@@ -88,10 +87,7 @@ module.exports = {
 
     await connection(table)
       .where('id', id)
-      .update({
-        updated_at: dateNow(),
-        deleted_at: dateNow()
-      })
+      .delete()
 
     return response.status(204).send();
   }

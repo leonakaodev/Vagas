@@ -5,7 +5,6 @@ exports.up = function(knex) {
     table.string('name').notNullable()
     table.dateTime('created_at')
     table.dateTime('updated_at').nullable()
-    table.dateTime('deleted_at').nullable()
   });
 };
 
