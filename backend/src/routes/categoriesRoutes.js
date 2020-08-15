@@ -13,7 +13,11 @@ router.get('/', celebrate({
   })
 }), CategoryController.index)
 
-router.post('/', CategoryController.create)
+router.post('/', celebrate({
+  [Segments.QUERY]: Joi.object().keys({
+    name: Joi.string().required(),
+  })
+}), CategoryController.create)
 
 router.put('/:id', CategoryController.update)
 
