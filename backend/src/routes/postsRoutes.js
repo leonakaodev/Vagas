@@ -4,6 +4,16 @@ const { celebrate, Joi, Segments } = require('celebrate');
 
 const PostController = require('../controllers/postController');
 
+router.get('/', celebrate({
+  [Segments.QUERY]: Joi.object().keys({
+    search: Joi.string(),
+    id: Joi.number().integer(),
+    page: Joi.number().integer().default(1),
+    perPage: Joi.number().integer().default(5),
+    categories: Joi.array()
+  })
+}), PostController.index)
+
 router.post('/', celebrate({
   [Segments.BODY]: Joi.object().keys({
     title: Joi.string().required(),
@@ -24,16 +34,6 @@ router.put('/:id', celebrate({
     id: Joi.number().integer().required()
   })
 }), PostController.update)
-
-router.get('/', celebrate({
-  [Segments.QUERY]: Joi.object().keys({
-    search: Joi.string(),
-    id: Joi.number().integer(),
-    page: Joi.number().integer().default(1),
-    perPage: Joi.number().integer().default(5),
-    categories: Joi.array()
-  })
-}), PostController.index)
 
 router.delete('/:id', celebrate({
   [Segments.PARAMS]: Joi.object().keys({
