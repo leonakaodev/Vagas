@@ -7,11 +7,14 @@ module.exports = {
     const page = parseInt(request.query.page) || 1,
       perPage = parseInt(request.query.perPage) || 5;
 
-    const [ count ] = await connection('posts').count();
+    const [ count ] = await connection('posts')
+      .where('deleted_at',  null)
+      .count();
   
     const posts = await connection('posts')
       .limit(perPage)
       .offset((page - 1) * perPage)
+      .where('deleted_at', null)
       .select(['*']);
 
   
@@ -62,7 +65,12 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
-    await connection('posts').where('id', id).delete();
+    await connection('posts')
+      .where('id', id)
+      .update({
+        updated_at: dateNow(),
+        deleted_at: dateNow()
+      })
 
     return response.status(204).send();
   }
