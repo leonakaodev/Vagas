@@ -1,7 +1,7 @@
-const connection = require('../database/connection');
+const connection = require('../database/connection')
 const moment = require('moment')
 
-module.exports = {
+class PostController {
 
   async index(request, response) {
     let { page, perPage } = request.query
@@ -30,7 +30,7 @@ module.exports = {
       previousPage,
       data: posts
     });
-  },
+  }
 
   async select(request, response) {
     const { id } = request.params
@@ -42,7 +42,7 @@ module.exports = {
     }
 
     return response.json(post);
-  },
+  }
 
   async create (request, response) {
     const { title, description } = request.body
@@ -54,7 +54,7 @@ module.exports = {
     })
 
     return response.json({ id })
-  },
+  }
 
   async update (request, response) {
     const { id } = request.params
@@ -71,7 +71,7 @@ module.exports = {
       return response.status(404).send();
     }
     return response.send()
-  },
+  }
 
   async delete(request, response) {
     const { id } = request.params;
@@ -81,3 +81,5 @@ module.exports = {
     return response.status(204).send();
   }
 }
+
+module.exports = new PostController()
