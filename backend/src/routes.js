@@ -4,10 +4,6 @@ const router = express.Router();
 const PostController = require('./controllers/postController');
 const CategoryController = require('./controllers/categoryController');
 
-router.get('', function(req, res) {
-  res.send('Hello World')
-})
-
 router.post('/posts', PostController.create)
 router.put('/posts/:id', PostController.update)
 router.get('/posts', PostController.index)
