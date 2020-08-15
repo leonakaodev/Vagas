@@ -4,10 +4,8 @@ const { dateNow } = require('../utils')
 class PostController extends Controller {
 
   static async index(request, response) {
-    let { page, perPage } = request.query
-
-    page = parseInt(page) || 1;
-    perPage = parseInt(perPage) || 5;
+    const page = parseInt(request.query.page) || 1,
+      perPage = parseInt(request.query.perPage) || 5;
 
     const [ count ] = await super.connection('posts').count();
   
@@ -16,20 +14,7 @@ class PostController extends Controller {
       .offset((page - 1) * perPage)
       .select(['*']);
   
-    const totalItems = count['count(*)'];
-    const totalPages = Math.ceil(totalItems / perPage);
-    const currentPage = page;
-    const nextPage = page < totalPages ? page + 1 : null;
-    const previousPage = page > 1 ? page - 1 : null;
-
-    return response.json({
-      totalItems,
-      totalPages,
-      currentPage,
-      nextPage,
-      previousPage,
-      data: posts
-    });
+    return response.json(super.mountIndexResponse(count, perPage, page, posts));
   }
 
   static async select(request, response) {
