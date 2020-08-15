@@ -1,17 +1,17 @@
-const connection = require('../database/connection')
-const moment = require('moment')
+const Controller = require('./controller')
+const { dateNow } = require('../utils')
 
-class PostController {
+class PostController extends Controller {
 
-  async index(request, response) {
+  static async index(request, response) {
     let { page, perPage } = request.query
 
     page = parseInt(page) || 1;
     perPage = parseInt(perPage) || 5;
 
-    const [ count ] = await connection('posts').count();
+    const [ count ] = await super.connection('posts').count();
   
-    const posts = await connection('posts')
+    const posts = await super.connection('posts')
       .limit(perPage)
       .offset((page - 1) * perPage)
       .select(['*']);
@@ -32,10 +32,10 @@ class PostController {
     });
   }
 
-  async select(request, response) {
+  static async select(request, response) {
     const { id } = request.params
 
-    const [ post ] = await connection('posts').where('id', id).select(['*']);
+    const [ post ] = await super.connection('posts').where('id', id).select(['*']);
 
     if(!post) {
       return response.status(404).send();
@@ -44,27 +44,27 @@ class PostController {
     return response.json(post);
   }
 
-  async create (request, response) {
+  static async create (request, response) {
     const { title, description } = request.body
-    const [ id ] = await connection('posts').insert({
+    const [ id ] = await PostController.connection('posts').insert({
       title,
       description,
-      created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
-      updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
+      created_at: dateNow(),
+      updated_at: dateNow()
     })
 
     return response.json({ id })
   }
 
-  async update (request, response) {
+  static async update (request, response) {
     const { id } = request.params
     const { title, description } = request.body
-    const affected = await connection('posts')
+    const affected = await super.connection('posts')
       .where({ id })
       .update({
         title,
         description,
-        updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
+        updated_at: dateNow()
       });
 
     if(!affected) {
@@ -73,13 +73,13 @@ class PostController {
     return response.send()
   }
 
-  async delete(request, response) {
+  static async delete(request, response) {
     const { id } = request.params;
 
-    await connection('posts').where('id', id).delete();
+    await super.connection('posts').where('id', id).delete();
 
     return response.status(204).send();
   }
 }
 
-module.exports = new PostController()
+module.exports = PostController
