@@ -6,14 +6,11 @@ const table = 'categories'
 module.exports = {
 
   async index(request, response) {
-    const page = parseInt(request.query.page) || 1,
-      perPage = parseInt(request.query.perPage) || 5
-
-    const { search, id } = request.query
+    const { page, perPage, search, id } = request.query
 
     const countObj = connection(table)
       .where('deleted_at',  null)
-  
+
     const categoriesObj = connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
@@ -29,10 +26,10 @@ module.exports = {
 
     const [ count ] = await countObj.count()
     const categories = await categoriesObj.select(['id', 'name', 'created_at', 'updated_at'])
-  
+
     return response.json(mountIndexResponse(count, perPage, page, categories));
   },
-  
+
   async create (request, response) {
     const { name } = request.body
     const [ id ] = await connection(table).insert({
