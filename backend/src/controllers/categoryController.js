@@ -7,20 +7,30 @@ module.exports = {
 
   async index(request, response) {
     const page = parseInt(request.query.page) || 1,
-      perPage = parseInt(request.query.perPage) || 5;
+      perPage = parseInt(request.query.perPage) || 5
 
-    const [ count ] = await connection(table)
+    const { search, id } = request.query
+
+    const countObj = connection(table)
       .where('deleted_at',  null)
-      .count();
   
-    const posts = await connection(table)
+    const categoriesObj = connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
       .where('deleted_at', null)
-      .select(['*']);
 
+    if(id) {
+      countObj.where('id', id)
+      categoriesObj.where('id', id)
+    } else if(search) {
+      countObj.where('name', 'like', `%${search}%`)
+      categoriesObj.where('name', 'like', `%${search}%`)
+    }
+
+    const [ count ] = await countObj.count()
+    const categories = await categoriesObj.select(['id', 'name', 'created_at', 'updated_at'])
   
-    return response.json(mountIndexResponse(count, perPage, page, posts));
+    return response.json(mountIndexResponse(count, perPage, page, categories));
   },
   
   async create (request, response) {
