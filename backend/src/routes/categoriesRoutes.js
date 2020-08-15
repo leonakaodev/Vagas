@@ -14,13 +14,13 @@ router.get('/', celebrate({
 }), CategoryController.index)
 
 router.post('/', celebrate({
-  [Segments.QUERY]: Joi.object().keys({
+  [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
   })
 }), CategoryController.create)
 
 router.put('/:id', celebrate({
-  [Segments.QUERY]: Joi.object().keys({
+  [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
   }),
   [Segments.PARAMS]: Joi.object().keys({
