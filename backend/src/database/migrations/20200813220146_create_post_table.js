@@ -5,7 +5,8 @@ exports.up = function(knex) {
     table.string('description').notNullable()
     table.string('image').nullable()
     table.dateTime('created_at')
-    table.dateTime('updated_at')
+    table.dateTime('updated_at').nullable()
+    table.dateTime('deleted_at').nullable()
   });
 };
     
