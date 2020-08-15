@@ -4,8 +4,11 @@ const moment = require('moment')
 module.exports = {
 
   async index(request, response) {
-    const { page = 1, perPage = 5 } = request.query
-      
+    let { page, perPage } = request.query
+
+    page = parseInt(page) || 1;
+    perPage = parseInt(perPage) || 5;
+
     const [ count ] = await connection('posts').count();
   
     const posts = await connection('posts')
@@ -13,9 +16,20 @@ module.exports = {
       .offset((page - 1) * perPage)
       .select(['*']);
   
-    response.header('X-Total-Count', count['count(*)']);
-      
-    return response.json(posts);
+    const totalItems = count['count(*)'];
+    const totalPages = Math.ceil(totalItems / perPage);
+    const currentPage = page;
+    const nextPage = page < totalPages ? page + 1 : null;
+    const previousPage = page > 1 ? page - 1 : null;
+
+    return response.json({
+      totalItems,
+      totalPages,
+      currentPage,
+      nextPage,
+      previousPage,
+      data: posts
+    });
   },
 
   async select(request, response) {
