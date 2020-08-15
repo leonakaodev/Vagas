@@ -1,17 +1,19 @@
 const connection = require('../database/connection')
 const { dateNow, mountIndexResponse } = require('../utils')
 
+const table = 'posts'
+
 module.exports = {
 
   async index(request, response) {
     const page = parseInt(request.query.page) || 1,
       perPage = parseInt(request.query.perPage) || 5;
 
-    const [ count ] = await connection('posts')
+    const [ count ] = await connection(table)
       .where('deleted_at',  null)
       .count();
   
-    const posts = await connection('posts')
+    const posts = await connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
       .where('deleted_at', null)
@@ -20,10 +22,10 @@ module.exports = {
   
     return response.json(mountIndexResponse(count, perPage, page, posts));
   },
-  
+
   async create (request, response) {
     const { title, description } = request.body
-    const [ id ] = await connection('posts').insert({
+    const [ id ] = await connection(table).insert({
       title,
       description,
       created_at: dateNow(),
@@ -36,7 +38,7 @@ module.exports = {
   async update (request, response) {
     const { id } = request.params
     const { title, description } = request.body
-    const affected = await connection('posts')
+    const affected = await connection(table)
       .where({ id })
       .update({
         title,
@@ -53,7 +55,7 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
-    await connection('posts')
+    await connection(table)
       .where('id', id)
       .update({
         updated_at: dateNow(),
