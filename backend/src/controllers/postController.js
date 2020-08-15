@@ -1,37 +1,38 @@
-const Controller = require('./controller')
-const { dateNow } = require('../utils')
+const connection = require('../database/connection')
+const { dateNow, mountIndexResponse } = require('../utils')
 
-class PostController extends Controller {
+module.exports = {
 
-  static async index(request, response) {
+  async index(request, response) {
     const page = parseInt(request.query.page) || 1,
       perPage = parseInt(request.query.perPage) || 5;
 
-    const [ count ] = await super.connection('posts').count();
+    const [ count ] = await connection('posts').count();
   
-    const posts = await super.connection('posts')
+    const posts = await connection('posts')
       .limit(perPage)
       .offset((page - 1) * perPage)
       .select(['*']);
-  
-    return response.json(super.mountIndexResponse(count, perPage, page, posts));
-  }
 
-  static async select(request, response) {
+  
+    return response.json(mountIndexResponse(count, perPage, page, posts));
+  },
+
+  async select(request, response) {
     const { id } = request.params
 
-    const [ post ] = await super.connection('posts').where('id', id).select(['*']);
+    const [ post ] = await connection('posts').where('id', id).select(['*']);
 
     if(!post) {
       return response.status(404).send();
     }
 
     return response.json(post);
-  }
+  },
 
-  static async create (request, response) {
+  async create (request, response) {
     const { title, description } = request.body
-    const [ id ] = await PostController.connection('posts').insert({
+    const [ id ] = await connection('posts').insert({
       title,
       description,
       created_at: dateNow(),
@@ -39,12 +40,12 @@ class PostController extends Controller {
     })
 
     return response.json({ id })
-  }
+  },
 
-  static async update (request, response) {
+  async update (request, response) {
     const { id } = request.params
     const { title, description } = request.body
-    const affected = await super.connection('posts')
+    const affected = await connection('posts')
       .where({ id })
       .update({
         title,
@@ -56,15 +57,13 @@ class PostController extends Controller {
       return response.status(404).send();
     }
     return response.send()
-  }
+  },
 
-  static async delete(request, response) {
+  async delete(request, response) {
     const { id } = request.params;
 
-    await super.connection('posts').where('id', id).delete();
+    await connection('posts').where('id', id).delete();
 
     return response.status(204).send();
   }
 }
-
-module.exports = PostController
