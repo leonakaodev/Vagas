@@ -6,10 +6,7 @@ const table = 'posts'
 module.exports = {
 
   async index(request, response) {
-    const page = parseInt(request.query.page) || 1,
-      perPage = parseInt(request.query.perPage) || 5
-
-    const { search, categories, id } = request.query
+    const { page, perPage, search, categories, id } = request.query
 
     const countObj = connection(table)
       .where('deleted_at',  null)
