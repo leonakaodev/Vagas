@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { celebrate, Joi, Segments } = require('celebrate');
 
-
 const PostController = require('../controllers/postController');
 
 router.post('/', celebrate({

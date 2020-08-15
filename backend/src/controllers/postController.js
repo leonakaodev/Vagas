@@ -45,12 +45,11 @@ module.exports = {
     const data = []
 
     for (const post of posts) {
-      const categories = await connection('post_categories')
+      post['categories'] = await connection('post_categories')
         .innerJoin('categories', 'categories.id', 'post_categories.category_id')
         .where('post_id', post.id)
-        .select(['categories.name'])
+        .pluck('categories.name')
       
-      post['categories'] = categories.map(category => category.name);
       data.push(post)
     }
 
