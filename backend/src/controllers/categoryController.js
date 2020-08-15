@@ -32,6 +32,19 @@ module.exports = {
 
   async create (request, response) {
     const { name } = request.body
+
+    const hasCategory = (await connection(table)
+      .where('name', name)
+      .first('id')) !== undefined
+
+    if(hasCategory){
+      return response.status(400).send({
+        statusCode: 400,
+        error: 'Bad Request',
+        message: 'This category already exists',
+      })
+    }
+
     const [ id ] = await connection(table).insert({
       name,
       created_at: dateNow(),
