@@ -19,7 +19,14 @@ router.post('/', celebrate({
   })
 }), CategoryController.create)
 
-router.put('/:id', CategoryController.update)
+router.put('/:id', celebrate({
+  [Segments.QUERY]: Joi.object().keys({
+    name: Joi.string().required(),
+  }),
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.number().integer().required()
+  })
+}), CategoryController.update)
 
 router.delete('/:id', CategoryController.delete)
 
