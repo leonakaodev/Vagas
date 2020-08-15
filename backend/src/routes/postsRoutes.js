@@ -11,8 +11,9 @@ router.post('/', celebrate({
     description: Joi.string(),
     image: Joi.string(),
     categories: Joi.array()
-  }),
+  })
 }), PostController.create)
+
 router.put('/:id', celebrate({
   [Segments.BODY]: Joi.object().keys({
     title: Joi.string().required(),
@@ -22,8 +23,9 @@ router.put('/:id', celebrate({
   }),
   [Segments.PARAMS]: Joi.object().keys({
     id: Joi.number().integer().required()
-  }),
+  })
 }), PostController.update)
+
 router.get('/', celebrate({
   [Segments.QUERY]: Joi.object().keys({
     search: Joi.string(),
@@ -33,6 +35,11 @@ router.get('/', celebrate({
     categories: Joi.array()
   })
 }), PostController.index)
-router.delete('/:id', PostController.delete)
+
+router.delete('/:id', celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.number().integer().required()
+  })
+}), PostController.delete)
 
 module.exports = router;
