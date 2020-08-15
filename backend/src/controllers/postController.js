@@ -62,10 +62,11 @@ module.exports = {
   },
 
   async create (request, response) {
-    const { title, description, categories = []} = request.body
+    const { title, description, image, categories = []} = request.body
     const [ id ] = await connection(table).insert({
       title,
       description,
+      image,
       created_at: dateNow(),
       updated_at: dateNow()
     })
@@ -83,12 +84,13 @@ module.exports = {
 
   async update (request, response) {
     const { id } = request.params
-    const { title, description, categories = [] } = request.body
+    const { title, description, image, categories = [] } = request.body
     const affected = await connection(table)
       .where({ id })
       .update({
         title,
         description,
+        image,
         updated_at: dateNow()
       });
     
