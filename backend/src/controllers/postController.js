@@ -7,17 +7,43 @@ module.exports = {
 
   async index(request, response) {
     const page = parseInt(request.query.page) || 1,
-      perPage = parseInt(request.query.perPage) || 5;
+      perPage = parseInt(request.query.perPage) || 5
 
-    const [ count ] = await connection(table)
+    const { search, categories, id } = request.query
+
+    const countObj = connection(table)
       .where('deleted_at',  null)
-      .count();
   
-    const posts = await connection(table)
+    const postsObj = connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
       .where('deleted_at', null)
-      .select(['*']);
+
+    if(id) {
+      countObj.where('id', id)
+      postsObj.where('id', id)
+    } else if(search || categories) {
+      if(search){
+        countObj.where(function(){
+          this.where('title', 'like', `%${search}%`).orWhere('description', 'like', `%${search}`)
+        })
+        postsObj.where(function(){
+          this.where('title', 'like', `%${search}%`).orWhere('description', 'like', `%${search}`)
+        })
+      }
+      if(categories) {
+        const filterCategory = function() {
+          for (const category of categories) {
+            this.orWhere('post_categories.category_id', category)
+          }
+        }
+        countObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').where(filterCategory)
+        postsObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').where(filterCategory)
+      }
+    }
+
+    const [ count ] = await countObj.count()
+    const posts = await postsObj.select(['id', 'title', 'description', 'image', 'created_at', 'updated_at'])
 
     const data = []
 
@@ -73,7 +99,7 @@ module.exports = {
     await connection('post_categories')
       .where('post_id', id)
       .delete()
-      
+
     for(const category of categories) {
       await connection('post_categories')
         .insert({
