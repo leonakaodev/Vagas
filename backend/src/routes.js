@@ -10,7 +10,6 @@ router.get('', function(req, res) {
 router.post('/posts', PostController.create)
 router.put('/posts/:id', PostController.update)
 router.get('/posts', PostController.index)
-router.get('/posts/:id', PostController.select)
 router.delete('/posts/:id', PostController.delete)
 
 module.exports = router;

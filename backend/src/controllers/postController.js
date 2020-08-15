@@ -20,19 +20,7 @@ module.exports = {
   
     return response.json(mountIndexResponse(count, perPage, page, posts));
   },
-
-  async select(request, response) {
-    const { id } = request.params
-
-    const [ post ] = await connection('posts').where('id', id).select(['*']);
-
-    if(!post) {
-      return response.status(404).send();
-    }
-
-    return response.json(post);
-  },
-
+  
   async create (request, response) {
     const { title, description } = request.body
     const [ id ] = await connection('posts').insert({
