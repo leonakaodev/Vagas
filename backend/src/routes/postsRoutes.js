@@ -13,7 +13,17 @@ router.post('/', celebrate({
     categories: Joi.array()
   }),
 }), PostController.create)
-router.put('/:id', PostController.update)
+router.put('/:id', celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    title: Joi.string().required(),
+    description: Joi.string(),
+    image: Joi.string(),
+    categories: Joi.array()
+  }),
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.number().integer().required()
+  }),
+}),PostController.update)
 router.get('/', PostController.index)
 router.delete('/:id', PostController.delete)
 
