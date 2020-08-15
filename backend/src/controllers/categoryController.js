@@ -73,6 +73,19 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
+    const hastPost = (await connection('post_categories')
+      .where('category_id', id)
+      .whereNotNull('post_id')
+      .first('post_id')) !== undefined
+
+    if(hastPost){
+      return response.status(400).send({
+        statusCode: 400,
+        error: 'Bad Request',
+        message: 'Exist a post using this category',
+      })
+    }
+
     await connection(table)
       .where('id', id)
       .update({
