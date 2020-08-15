@@ -28,6 +28,10 @@ router.put('/:id', celebrate({
   })
 }), CategoryController.update)
 
-router.delete('/:id', CategoryController.delete)
+router.delete('/:id', celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.number().integer().required()
+  })
+}), CategoryController.delete)
 
 module.exports = router;
