@@ -12,14 +12,14 @@
             <v-spacer></v-spacer>
 
             <v-text-field label="Search posts" hide-details="auto">
-                <v-icon slot="prepend">mdi-magnify</v-icon>
+                <v-icon slot="append">mdi-magnify</v-icon>
             </v-text-field>
             <v-spacer></v-spacer>
 
             <v-btn
                 href="https://github.com/vuetifyjs/vuetify/releases/latest"
                 target="_blank"
-                rounded
+                text
             >
                 <span class="mr-2">New post</span>
                 <v-icon>mdi-open-in-new</v-icon>
