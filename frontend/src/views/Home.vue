@@ -1,6 +1,7 @@
 <template>
     <div class="home">
         HOME
+        <i class="fa fa-home"></i>
     </div>
 </template>
 
