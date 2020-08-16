@@ -27,7 +27,13 @@
             </v-col>
         </v-row>
         <v-row class="main">
-
+            <v-container fill>
+                <PostListItem
+                    v-for="post in request.data"
+                    :key="post.id"
+                    :post="post"
+                />
+            </v-container>
         </v-row>
         <v-row class="footer d-flex justify-end">
             <v-pagination
@@ -40,7 +46,12 @@
 </template>
 
 <script>
+import PostListItem from './PostListItem'
+
 export default {
+    components: {
+        PostListItem
+    },
     data: () => {
         return {
             sort: 'asc',
@@ -57,7 +68,11 @@ export default {
                 page: 1,
                 totalPages: 8,
                 data: [
-                    { title: 'Titulo', description: 'Descrição'}
+                    { id: 1, title: 'Titulo', description: 'Descrição'},
+                    { id: 2, title: 'Titulo', description: 'Descrição'},
+                    { id: 3, title: 'Titulo', description: 'Descrição'},
+                    { id: 4, title: 'Titulo', description: 'Descrição'},
+                    { id: 5, title: 'Titulo', description: 'Descrição'},
                 ]
             }
         }
