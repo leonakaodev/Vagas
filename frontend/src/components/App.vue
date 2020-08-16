@@ -6,7 +6,6 @@
 
 <script>
 import '../assets/css/main.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 
 export default {
 
