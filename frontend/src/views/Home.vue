@@ -12,22 +12,25 @@
 
 <script>
 import PostCard from '@/components/PostCard'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     name: 'Home',
     components: {
         PostCard
     },
-    data: () => {
-        return {
-            posts: [
-                {title: 'Titulo', description: 'Descrição'},
-                {title: 'Titulo', description: 'Descrição'},
-                {title: 'Titulo', description: 'Descrição'},
-                {title: 'Titulo', description: 'Descrição'},
-                {title: 'Titulo', description: 'Descrição'},
-            ]
-        }
+    computed: {
+        ...mapState('home', {
+            posts: state => state.posts,
+        })
+    },
+    methods: {
+        ...mapActions('home', [
+            'load'
+        ])
+    },
+    created() {
+        this.load()
     }
 }
 </script>
