@@ -1,11 +1,23 @@
 <template>
     <v-container>
+        <v-row class="d-flex justify-center align-items-center title">
+            <h1>Welcome to Blog</h1>
+        </v-row>
         <v-row>
             <PostCard
                 v-for="(post, index) in posts"
                 :key="index"
                 :post="post"
             />
+        </v-row>
+        <v-row class="showList">
+            <v-btn
+                color="primary"
+                to="/posts/search"
+                block
+            >
+                Show more posts
+            </v-btn>
         </v-row>
     </v-container>
 </template>
@@ -34,3 +46,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.title {
+    padding: 50px 0;
+}
+
+.showList {
+    padding: 25px 0;
+}
+
+.showList button {
+    padding: 20px 0;
+}
+</style>
