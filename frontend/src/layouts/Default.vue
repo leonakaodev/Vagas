@@ -1,12 +1,41 @@
 <template>
     <v-app>
+        <v-navigation-drawer
+            v-model="drawer"
+            app
+        >
+            <v-list
+                dense
+                rounded
+            >
+                <v-list-item
+                    v-for="item in items"
+                    :key="item.title"
+                    :to="item.to"
+                    link
+                >
+                    <v-list-item-icon>
+                        <v-icon v-text="item.icon" />
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
         <v-app-bar
             app
             color="primary"
             dark
         >
             <div class="d-flex align-center">
-                <v-icon>mdi-menu</v-icon>
+                <v-btn
+                    @click="drawer = !drawer"
+                    text
+                >
+                    <v-icon>mdi-menu</v-icon>
+                </v-btn>
             </div>
 
             <v-spacer></v-spacer>
@@ -26,6 +55,20 @@
         </v-main>
     </v-app>
 </template>
+
+<script>
+export default {
+    data: () => {
+        return{
+            drawer: false,
+            items: [
+                { title: 'Home', icon: 'mdi-home', to: '/' },
+                { title: 'Posts', icon: 'mdi-format-list-bulleted', to: '/posts/search' },
+            ]
+        }
+    }
+}
+</script>
 
 <style scoped>
 
