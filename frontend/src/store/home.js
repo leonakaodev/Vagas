@@ -12,7 +12,12 @@ export default {
     },
     actions: {
         async load(context) {
-            const { data } = await axios.get('/posts')
+            const { data } = await axios.get('/posts', {
+                params: {
+                    page: 1,
+                    perPage: 6
+                }
+            })
             context.commit('setPost', {
                 posts: data.data
             })
