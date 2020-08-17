@@ -36,3 +36,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.card-post {
+    width: 30vw;
+    margin-bottom: 30px;
+}
+</style>
