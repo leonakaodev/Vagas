@@ -10,7 +10,8 @@ router.get('/', celebrate({
     id: Joi.number().integer(),
     page: Joi.number().integer().default(1),
     perPage: Joi.number().integer().default(5),
-    categories: Joi.array()
+    categories: Joi.array(),
+    order: Joi.string().pattern(/desc|asc/).default('desc')
   })
 }), PostController.index)
 

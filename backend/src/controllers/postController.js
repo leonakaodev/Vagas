@@ -6,11 +6,11 @@ const table = 'posts'
 module.exports = {
 
   async index(request, response) {
-    const { page, perPage, search, categories, id } = request.query
+    const { page, perPage, search, categories, id, order } = request.query
 
     const countObj = connection(table)
       .where('deleted_at',  null)
-  
+
     const postsObj = connection(table)
       .limit(perPage)
       .offset((page - 1) * perPage)
@@ -40,7 +40,9 @@ module.exports = {
     }
 
     const [ count ] = await countObj.count()
-    const posts = await postsObj.select(['id', 'title', 'description', 'image', 'created_at', 'updated_at'])
+    const posts = await postsObj
+      .orderBy('created_at', order)
+      .select(['id', 'title', 'description', 'image', 'created_at', 'updated_at'])
 
     const data = []
 
@@ -49,11 +51,11 @@ module.exports = {
         .innerJoin('categories', 'categories.id', 'post_categories.category_id')
         .where('post_id', post.id)
         .pluck('categories.name')
-      
+
       data.push(post)
     }
 
-  
+
     return response.json(mountIndexResponse(count, perPage, page, data));
   },
 
@@ -89,7 +91,7 @@ module.exports = {
         image,
         updated_at: dateNow()
       });
-    
+
     if(!affected) {
       return response.status(404).send();
     }
