@@ -8,6 +8,9 @@ router.get('/', celebrate({
   [Segments.QUERY]: Joi.object().keys({
     search: Joi.string(),
     id: Joi.number().integer(),
+    date: Joi.array().max(2).items(
+      Joi.string().isoDate()
+    ),
     page: Joi.number().integer().default(1),
     perPage: Joi.number().integer().default(5),
     categories: Joi.array(),

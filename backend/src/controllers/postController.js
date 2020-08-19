@@ -6,7 +6,7 @@ const table = 'posts'
 module.exports = {
 
   async index(request, response) {
-    const { page, perPage, search, categories, id, order } = request.query
+    const { page, perPage, search, categories, id, date, order } = request.query
 
     const countObj = connection(table)
       .where('deleted_at',  null)
@@ -19,7 +19,7 @@ module.exports = {
     if(id) {
       countObj.where('id', id)
       postsObj.where('id', id)
-    } else if(search || categories) {
+    } else if(search || categories || date) {
       if(search){
         countObj.where(function(){
           this.where('title', 'like', `%${search}%`).orWhere('description', 'like', `%${search}`)
@@ -36,6 +36,11 @@ module.exports = {
         }
         countObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').where(filterCategory)
         postsObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').where(filterCategory)
+      }
+      if(date) {
+        date[1] = date[1] || dateNow()
+        countObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').whereBetween('created_at', date)
+        postsObj.innerJoin('post_categories', 'posts.id', 'post_categories.post_id').whereBetween('created_at', date)
       }
     }
 
