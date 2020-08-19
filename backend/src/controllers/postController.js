@@ -6,7 +6,7 @@ const table = 'posts'
 module.exports = {
 
   async index(request, response) {
-    const { page, perPage, search, categories, id, date, order } = request.query
+    const { page, perPage, search, categories, id, date, sort } = request.query
 
     const countObj = connection(table)
       .where('deleted_at',  null)
@@ -46,7 +46,7 @@ module.exports = {
 
     const [ count ] = await countObj.count()
     const posts = await postsObj
-      .orderBy('created_at', order)
+      .orderBy('created_at', sort)
       .select(['id', 'title', 'description', 'image', 'created_at', 'updated_at'])
 
     const data = []
