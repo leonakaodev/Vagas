@@ -26,7 +26,7 @@
 export default {
     data () {
         return {
-            show: true,
+            show: false,
             message: '',
             type: '',
             timeout: 2000
