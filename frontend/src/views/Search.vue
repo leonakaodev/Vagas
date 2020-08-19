@@ -1,5 +1,8 @@
 <template>
     <v-container>
+        <v-row class="d-flex justify-center align-items-center title">
+            <h1>Look our posts</h1>
+        </v-row>
         <v-row>
             <PostList />
         </v-row>
