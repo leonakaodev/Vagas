@@ -11,13 +11,15 @@
             />
         </v-row>
         <v-row class="showList">
-            <v-btn
-                color="primary"
-                to="/posts/search"
-                block
-            >
-                Show more posts
-            </v-btn>
+            <v-col cols="12">
+                <v-btn
+                    color="primary"
+                    to="/posts/search"
+                    block
+                >
+                    Show more posts
+                </v-btn>
+            </v-col>
         </v-row>
     </v-container>
 </template>
