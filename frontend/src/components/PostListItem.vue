@@ -1,13 +1,24 @@
 <template>
     <v-row>
-        <v-col md="2" sm="12">
+        <v-col
+            md="2"
+            sm="4"
+            cols="12"
+            align="center"
+        >
             <v-img
                 class="white--text align-end"
-                height="100px"
+                height="auto"
+                max-width="200px"
                 :src="post.image || 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
             />
         </v-col>
-        <v-col md="8" sm="12">
+        <v-col
+            sm="6"
+            cols="12"
+            align="center"
+            align-md="start"
+        >
             <v-row>
                 <v-col cols="12">
                     <span class="post-title">
@@ -30,8 +41,22 @@
                 </v-col>
             </v-row>
         </v-col>
-        <v-col md="2" sm="12" cols="12">
-            Actions
+        <v-col
+            sm="2"
+            cols="12"
+            align="center"
+            align-sm="start"
+        >
+            <v-btn
+                text
+            >
+                <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn
+                text
+            >
+                <v-icon>mdi-delete</v-icon>
+            </v-btn>
         </v-col>
         <v-col cols="12">
             <v-divider />
