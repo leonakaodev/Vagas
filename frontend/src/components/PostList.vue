@@ -7,6 +7,7 @@
                     label="Search posts"
                     hide-details="auto"
                     prepend-icon="mdi-magnify"
+                    @input="filter"
                 />
             </v-col>
             <v-col cols="12" sm="12" md="6">
@@ -31,6 +32,7 @@
                         v-model="date"
                         range
                         :max="(new Date(new Date().setHours(0, 0, 0))).toISOString()"
+                        @input="filter"
                     />
                 </v-menu>
             </v-col>
@@ -45,6 +47,7 @@
                     prepend-inner-icon="mdi-tag"
                     multiple
                     chips
+                    @input="filter"
                 ></v-select>
             </v-col>
             <v-col
@@ -57,7 +60,7 @@
         <v-row class="main">
             <v-container fill>
                 <PostListItem
-                    v-for="post in request.data"
+                    v-for="post in posts"
                     :key="post.id"
                     :post="post"
                 />
@@ -65,9 +68,10 @@
         </v-row>
         <v-row class="footer d-flex justify-end">
             <v-pagination
-                v-model="currentPage"
-                :length="request.totalPages"
+                :value="currentPage"
+                :length="totalPages"
                 :total-visible="5"
+                @input="update($event)"
             ></v-pagination>
         </v-row>
     </v-container>
@@ -75,6 +79,7 @@
 
 <script>
 import PostListItem from './PostListItem'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -82,7 +87,7 @@ export default {
     },
     data: () => {
         return {
-            sort: 'asc',
+            sort: 'desc',
             categories: [],
             search: '',
             date: [],
@@ -92,23 +97,15 @@ export default {
                 { name: 'Divertidos', value: 3 },
                 { name: 'Engraçados', value: 4 },
             ],
-            currentPage: 1,
-            request: {
-                page: 1,
-                totalPages: 8,
-                data: [
-                    { id: 1, title: 'Titulo', description: 'Descrição', categories: ['legal', 'chato']},
-                    { id: 2, title: 'Titulo', description: 'Descrição'},
-                    { id: 3, title: 'Titulo', description: 'Descrição'},
-                    { id: 4, title: 'Titulo', description: 'Descrição'},
-                    { id: 5, title: 'Titulo', description: 'Descrição'},
-                ]
-            }
         }
+    },
+    created(){
+        this.update()
     },
     methods: {
         changeSort() {
             this.sort = this.sort === 'asc' ? 'desc' : 'asc'
+            this.update()
         },
         formatDate (date) {
             if (!date) return null
@@ -116,6 +113,21 @@ export default {
             const [year, month, day] = date.split('-')
             return `${day}/${month}/${year}`
         },
+        update(page = undefined){
+            this.load({
+                search: this.search,
+                date: this.date,
+                categories: this.categories,
+                sort: this.sort,
+                page
+            })
+        },
+        filter() {
+            this.update(1)
+        },
+        ...mapActions('posts', [
+            'load'
+        ])
     },
     computed: {
         sortIcon() {
@@ -126,7 +138,12 @@ export default {
                 return this.formatDate(date)
             })
             return date.join(' ~ ')
-        }
-    }
+        },
+        ...mapState('posts', {
+            posts: state => state.posts,
+            totalPages: state => state.totalPages,
+            currentPage: state => state.page,
+        })
+    },
 }
 </script>

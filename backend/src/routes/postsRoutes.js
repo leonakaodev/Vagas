@@ -6,7 +6,7 @@ const PostController = require('../controllers/postController');
 
 router.get('/', celebrate({
   [Segments.QUERY]: Joi.object().keys({
-    search: Joi.string(),
+    search: Joi.string().allow(''),
     id: Joi.number().integer(),
     date: Joi.array().max(2).items(
       Joi.string().isoDate()
