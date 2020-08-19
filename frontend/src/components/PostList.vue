@@ -43,7 +43,7 @@
                     v-model="categories"
                     :items="categoriesOptions"
                     item-text="name"
-                    item-value="value"
+                    item-value="id"
                     prepend-inner-icon="mdi-tag"
                     multiple
                     chips
