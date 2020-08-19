@@ -10,7 +10,7 @@
                         <v-col cols="12" class="mb-5">
                             <p class="mb-0">
                                 <a @click='generateImage()'>
-                                    Generate image url
+                                    Generate random image url
                                 </a>
                             </p>
                             <v-text-field
