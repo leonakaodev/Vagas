@@ -19,3 +19,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.title {
+    padding: 50px 0;
+}
+
+</style>
