@@ -6,7 +6,7 @@
         <v-img
             class="white--text align-end"
             height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            :src="post.image || 'https://unsplash.it/800/800'"
         >
             <v-card-title>{{ post.title }}</v-card-title>
         </v-img>
