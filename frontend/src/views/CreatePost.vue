@@ -40,7 +40,7 @@
                         </v-col>
                         <v-col cols="12">
                             <p class="mb-0">
-                                <a @click="addNewTag()">Add new tag</a>
+                                <CreateCategory @create="newCategory" />
                             </p>
                             <v-select
                                 v-model="categories"
@@ -68,7 +68,7 @@
                             @click="create"
                             color="primary"
                         >
-                            Salvar
+                            Save
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -79,6 +79,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import CreateCategory from '../components/categories/CreateCategory'
 
 export default {
     name: 'Home',
@@ -91,6 +92,9 @@ export default {
             categories: [],
         }
     },
+    components: {
+        CreateCategory
+    },
     computed: {
         ...mapState('categories', {
             categoriesOptions: state => state.categories,
@@ -99,6 +103,9 @@ export default {
     methods: {
         generateImage() {
             this.image = 'https://unsplash.it/800/800'
+        },
+        newCategory(category) {
+            this.categories.push(category)
         },
         async create(){
             try {

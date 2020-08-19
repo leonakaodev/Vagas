@@ -26,6 +26,11 @@ export default {
                 alert('An error occurred: ' + err.message)
                 commit('resetRequestInfos')
             }
+        },
+        async create({ dispatch }, params) {
+            const { data } = await axios.post('/categories', params)
+            dispatch('load')
+            return data
         }
     }
 }
