@@ -39,6 +39,9 @@ export default {
         },
         async create(_, params) {
             return await axios.post('/posts', params)
+        },
+        async delete(_, params) {
+            return await axios.delete(`/posts/${params.id}`)
         }
     }
 }

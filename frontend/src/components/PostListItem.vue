@@ -54,6 +54,7 @@
             </v-btn>
             <v-btn
                 text
+                @click="remove()"
             >
                 <v-icon>mdi-delete</v-icon>
             </v-btn>
@@ -65,6 +66,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     name: 'PostListItem',
     props: {
@@ -72,6 +75,26 @@ export default {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        async remove() {
+            try {
+                await this.deletePost({ id: this.post.id })
+                this.$store.commit('notifier/showMessage', {
+                    content: 'Post deleted successfully',
+                    type: 'success'
+                })
+                this.$emit('delete')
+            } catch (err) {
+                this.$store.commit('notifier/showMessage', {
+                    content: 'An error occurred: ' + err.message,
+                    type: 'error'
+                })
+            }
+        },
+        ...mapActions('posts', {
+            deletePost: 'delete'
+        })
     }
 }
 </script>
