@@ -41,7 +41,7 @@
             >
                 <v-select
                     v-model="categories"
-                    :items="keys"
+                    :items="categoriesOptions"
                     item-text="name"
                     item-value="value"
                     prepend-inner-icon="mdi-tag"
@@ -91,16 +91,11 @@ export default {
             categories: [],
             search: '',
             date: [],
-            keys: [
-                { name: 'Chatos', value: 1 },
-                { name: 'Legais', value: 2 },
-                { name: 'Divertidos', value: 3 },
-                { name: 'Engraçados', value: 4 },
-            ],
         }
     },
     created(){
         this.update()
+        this.loadCategories()
     },
     methods: {
         changeSort() {
@@ -114,7 +109,7 @@ export default {
             return `${day}/${month}/${year}`
         },
         update(page = undefined){
-            this.load({
+            this.loadPosts({
                 search: this.search,
                 date: this.date,
                 categories: this.categories,
@@ -125,9 +120,12 @@ export default {
         filter() {
             this.update(1)
         },
-        ...mapActions('posts', [
-            'load'
-        ])
+        ...mapActions('posts', {
+            loadPosts: 'load'
+        }),
+        ...mapActions('categories', {
+            loadCategories: 'load'
+        })
     },
     computed: {
         sortIcon() {
@@ -143,6 +141,9 @@ export default {
             posts: state => state.posts,
             totalPages: state => state.totalPages,
             currentPage: state => state.page,
+        }),
+        ...mapState('categories', {
+            categoriesOptions: state => state.categories,
         })
     },
 }
