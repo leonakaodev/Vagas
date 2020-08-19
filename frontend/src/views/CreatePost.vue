@@ -87,7 +87,7 @@ export default {
             title: '',
             description: '',
             image: undefined,
-            validImage: false,
+            validImage: true,
             categories: [],
         }
     },
@@ -107,6 +107,10 @@ export default {
                     description: this.description,
                     image: this.validImage ? this.image : undefined,
                     categories: this.categories
+                })
+                this.$store.commit('notifier/showMessage', {
+                    content: 'Post created successfully',
+                    type: 'success'
                 })
                 this.$router.push('/posts/search',)
             } catch (err) {
