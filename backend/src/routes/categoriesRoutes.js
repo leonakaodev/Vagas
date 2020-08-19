@@ -6,7 +6,7 @@ const CategoryController = require('../controllers/categoryController');
 
 router.get('/', celebrate({
   [Segments.QUERY]: Joi.object().keys({
-    search: Joi.string(),
+    search: Joi.string().allow(''),
     id: Joi.number().integer(),
   })
 }), CategoryController.index)
