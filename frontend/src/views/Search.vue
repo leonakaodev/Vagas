@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PostList from '@/components/PostList'
+import PostList from '@/components/posts/PostList'
 
 export default {
     name: 'search',
