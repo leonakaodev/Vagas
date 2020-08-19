@@ -42,9 +42,8 @@
             <v-spacer></v-spacer>
 
             <v-btn
-                href="https://github.com/vuetifyjs/vuetify/releases/latest"
-                target="_blank"
                 text
+                to="/posts/create"
             >
                 <span class="mr-2">New post</span>
                 <v-icon>mdi-open-in-new</v-icon>

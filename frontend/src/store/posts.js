@@ -36,6 +36,9 @@ export default {
                 alert('An error occurred: ' + err.message)
                 commit('resetRequestInfos')
             }
+        },
+        async create(_, params) {
+            return await axios.post('/posts', params)
         }
     }
 }
