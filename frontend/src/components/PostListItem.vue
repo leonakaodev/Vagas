@@ -1,30 +1,37 @@
 <template>
     <v-row>
-        <v-col cols="2">
+        <v-col md="2" sm="12">
             <v-img
                 class="white--text align-end"
                 height="100px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                :src="post.image || 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
             />
         </v-col>
-        <v-col cols="10">
+        <v-col md="8" sm="12">
             <v-row>
-                <v-col cols="2">
-                    {{ post.title }}
-                </v-col>
-                <v-col cols="8">
-                    {{ post.description }}
-                </v-col>
-                <v-col cols="2">
-                    Actions
+                <v-col cols="12">
+                    <span class="post-title">
+                        {{ post.title }}
+                    </span>
+                    <span class="post-description">
+                        {{ post.description }}
+                    </span>
                 </v-col>
             </v-row>
-            <v-row class="categories">
-                <v-chip>teste</v-chip>
-                <v-chip>teste</v-chip>
-                <v-chip>teste</v-chip>
-                <v-chip>teste</v-chip>
+            <v-row v-if="post.categories" class="categories">
+                <v-col cols="12">
+                    <v-chip
+                        v-for="category in post.categories"
+                        :key="category"
+                        color="primary"
+                    >
+                        {{ category }}
+                    </v-chip>
+                </v-col>
             </v-row>
+        </v-col>
+        <v-col md="2" sm="12" cols="12">
+            Actions
         </v-col>
         <v-col cols="12">
             <v-divider />
@@ -46,6 +53,10 @@ export default {
 
 <style scoped>
 .categories span + span {
-    margin-left: 20px;
+    margin-left: 1rem;
+}
+
+.post-description {
+    margin-left: 1rem;
 }
 </style>
