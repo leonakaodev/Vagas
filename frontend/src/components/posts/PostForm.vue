@@ -131,7 +131,6 @@ export default {
         if(this.post) {
             this.syncWithPost(this.post)
         }
-        console.log(this)
     },
     watch: {
         post(value) {
