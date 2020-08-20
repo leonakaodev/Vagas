@@ -28,7 +28,7 @@ module.exports = {
     return response.json({
       totalItems: count['count(*)'],
       data: categories
-    });
+    })
   },
 
   async create (request, response) {
@@ -63,16 +63,16 @@ module.exports = {
       .update({
         name,
         updated_at: dateNow()
-      });
+      })
 
     if(!affected) {
-      return response.status(404).send();
+      return response.status(404).send()
     }
     return response.send()
   },
 
   async delete(request, response) {
-    const { id } = request.params;
+    const { id } = request.params
 
     const hasPost = (await connection('post_categories')
       .innerJoin('posts', 'post_categories.post_id', 'posts.id')
@@ -92,6 +92,6 @@ module.exports = {
       .where('id', id)
       .delete()
 
-    return response.status(204).send();
+    return response.status(204).send()
   }
 }

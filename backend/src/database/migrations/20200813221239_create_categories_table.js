@@ -5,9 +5,9 @@ exports.up = function(knex) {
     table.string('name').notNullable()
     table.dateTime('created_at')
     table.dateTime('updated_at').nullable()
-  });
-};
+  })
+}
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('categories');
-};
+  return knex.schema.dropTable('categories')
+}

@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { celebrate, Joi, Segments } = require('celebrate');
+const express = require('express')
+const router = express.Router()
+const { celebrate, Joi, Segments } = require('celebrate')
 
-const PostController = require('../controllers/postController');
+const PostController = require('../controllers/postController')
 
 router.get('/', celebrate({
   [Segments.QUERY]: Joi.object().keys({
@@ -45,4 +45,4 @@ router.delete('/:id', celebrate({
   })
 }), PostController.delete)
 
-module.exports = router;
+module.exports = router

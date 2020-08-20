@@ -8,6 +8,7 @@
     "db:rollback": "knex migrate:rollback",
     "db:migrate": "knex migrate:latest",
     "db:reset": "knex migrate:rollback && knex migrate:latest",
+    "lint": "eslint src/** --fix",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "start": "cross-env NODE_ENV=production node src/index.js"
   },

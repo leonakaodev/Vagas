@@ -7,9 +7,9 @@ exports.up = function(knex) {
     table.dateTime('created_at')
     table.dateTime('updated_at').nullable()
     table.dateTime('deleted_at').nullable()
-  });
-};
+  })
+}
     
 exports.down = function(knex) {
-  return knex.schema.dropTable('posts');
-};
+  return knex.schema.dropTable('posts')
+}

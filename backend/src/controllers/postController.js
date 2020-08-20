@@ -63,7 +63,7 @@ module.exports = {
     }
 
 
-    return response.json(mountIndexResponse(count, perPage, page, data));
+    return response.json(mountIndexResponse(count, perPage, page, data))
   },
 
   async create (request, response) {
@@ -97,10 +97,10 @@ module.exports = {
         description,
         image,
         updated_at: dateNow()
-      });
+      })
 
     if(!affected) {
-      return response.status(404).send();
+      return response.status(404).send()
     }
 
     await connection('post_categories')
@@ -119,7 +119,7 @@ module.exports = {
   },
 
   async delete(request, response) {
-    const { id } = request.params;
+    const { id } = request.params
 
     await connection(table)
       .where('id', id)
@@ -128,6 +128,6 @@ module.exports = {
         deleted_at: dateNow()
       })
 
-    return response.status(204).send();
+    return response.status(204).send()
   }
 }
