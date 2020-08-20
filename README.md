@@ -21,7 +21,7 @@ Para visualizar a aplicação, basta acessar a pasta **frontend** e executar os 
 
 ```
 npm install
-npm run server
+npm run serve
 ```
 
 ## API
