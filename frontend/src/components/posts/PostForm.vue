@@ -50,8 +50,15 @@
                 </v-col>
             </v-row>
             <v-row justify="end" class="mt-4">
-                <v-col cols="3" align="right">
+                <v-col cols="12" align="right">
                     <v-btn
+                        color="warning"
+                        @click="cancel"
+                    >
+                        Cancel
+                    </v-btn>
+                    <v-btn
+                        class="ml-5"
                         color="primary"
                         @click="save"
                     >
@@ -78,6 +85,12 @@ export default {
             }
         }
     },
+    props: {
+        post: {
+            type: Object,
+            required: false
+        }
+    },
     computed: {
         ...mapState('categories', {
             categoriesOptions: state => state.categories,
@@ -96,12 +109,26 @@ export default {
         save(){
             this.$emit('save', this.form)
         },
+        cancel(){
+            this.$emit('cancel')
+        },
+        syncWithPost(post){
+            this.form = Object.assign(this.form, post)
+        },
         ...mapActions('categories', {
             loadCategories: 'load'
         }),
     },
     created() {
         this.loadCategories()
+        if(this.post) {
+            this.syncWithPost(this.post)
+        }
+    },
+    watch: {
+        post(value) {
+            this.syncWithPost(value)
+        }
     }
 }
 </script>

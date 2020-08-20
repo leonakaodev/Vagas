@@ -37,8 +37,15 @@ export default {
                 commit('resetRequestInfos')
             }
         },
+        async findById(_, id) {
+            const { data } = await axios.get('/posts', { params: { id }})
+            return data.data[0]
+        },
         async create(_, params) {
             return await axios.post('/posts', params)
+        },
+        async update(_, payload) {
+            return await axios.put(`/posts/${payload.id}`, payload.post)
         },
         async delete(_, params) {
             return await axios.delete(`/posts/${params.id}`)

@@ -49,6 +49,7 @@
         >
             <v-btn
                 text
+                @click="edit()"
             >
                 <v-icon>mdi-pencil</v-icon>
             </v-btn>
@@ -91,6 +92,9 @@ export default {
                     type: 'error'
                 })
             }
+        },
+        async edit() {
+            this.$router.push({ name: 'EditPost', params: { id: this.post.id }})
         },
         ...mapActions('posts', {
             deletePost: 'delete'

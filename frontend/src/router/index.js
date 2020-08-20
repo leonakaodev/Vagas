@@ -20,8 +20,14 @@ const routes = [
             },
             {
                 path: '/posts/search',
-                name: 'Search',
+                name: 'SearchPost',
                 component: () => import('../views/Search.vue')
+            },
+            {
+                path: '/posts/edit/:id',
+                name: 'EditPost',
+                props: true,
+                component: () => import('../views/EditPost.vue')
             }
         ],
     }
