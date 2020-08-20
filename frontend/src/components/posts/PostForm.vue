@@ -5,7 +5,7 @@
                 <v-col cols="12" class="mb-5">
                     <p class="mb-0">
                         <a @click='generateImage()'>
-                            Generate random image url
+                            Use a random image url
                         </a>
                     </p>
                     <v-text-field
@@ -14,8 +14,10 @@
                         outlined
                     ></v-text-field>
                     <v-img
-                        v-if="form.image"
+                        v-show="form.image && validImage"
                         :src="form.image"
+                        @error="imgError"
+                        @load="loadImage"
                         height="400"
                     />
                 </v-col>
@@ -87,6 +89,7 @@ export default {
                 image: '',
                 categories: []
             },
+            validImage: false,
         }
     },
     props: {
@@ -111,6 +114,7 @@ export default {
             this.form.categories.push(category)
         },
         save(){
+            if(!this.validImage) delete this.form.image
             this.$emit('save', this.form)
         },
         cancel(){
@@ -121,6 +125,12 @@ export default {
         },
         validate(){
             return this.$refs.form.validate()
+        },
+        imgError(){
+            this.validImage = false
+        },
+        loadImage(){
+            this.validImage = true
         },
         ...mapActions('categories', {
             loadCategories: 'load'
