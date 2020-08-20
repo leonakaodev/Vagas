@@ -39,7 +39,7 @@
             <v-col
                 cols="11"
             >
-                <v-select
+                <v-autocomplete
                     v-model="categories"
                     :items="categoriesOptions"
                     item-text="name"
@@ -48,7 +48,7 @@
                     multiple
                     chips
                     @input="filter"
-                ></v-select>
+                ></v-autocomplete>
             </v-col>
             <v-col
                 cols="1"
