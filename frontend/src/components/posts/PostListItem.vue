@@ -16,21 +16,21 @@
         <v-col
             sm="6"
             cols="12"
-            align="center"
-            align-md="start"
         >
-            <v-row>
+            <v-row
+                class="text-center text-sm-left"
+            >
                 <v-col cols="12">
                     <span class="post-title">
                         {{ post.title }}
                     </span>
+                </v-col>
+                <v-col cols="12">
                     <span class="post-description">
                         {{ post.description }}
                     </span>
                 </v-col>
-            </v-row>
-            <v-row v-if="post.categories" class="categories">
-                <v-col cols="12">
+                <v-col v-if="post.categories" class="categories" cols="12">
                     <v-chip
                         v-for="category in post.categories"
                         :key="category"
@@ -105,10 +105,6 @@ export default {
 
 <style scoped>
 .categories span + span {
-    margin-left: 1rem;
-}
-
-.post-description {
     margin-left: 1rem;
 }
 </style>
