@@ -16,7 +16,7 @@
 
 <script>
 import CategoryList from '@/components/categories/CategoryList'
-import CreateCategory from '../components/categories/CreateCategory'
+import CreateCategory from '@/components/categories/CreateCategory'
 
 export default {
     name: 'ListCategories',

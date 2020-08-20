@@ -9,7 +9,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import PostForm from '../components/posts/PostForm'
+import PostForm from '@/components/posts/PostForm'
 
 export default {
     name: 'EditPost',
