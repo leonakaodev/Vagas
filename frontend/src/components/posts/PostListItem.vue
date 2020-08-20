@@ -10,7 +10,7 @@
                 class="white--text align-end"
                 height="auto"
                 max-width="200px"
-                :src="post.image || 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
+                :src="post.image || require('@/assets/images/no-image.png')"
             />
         </v-col>
         <v-col
