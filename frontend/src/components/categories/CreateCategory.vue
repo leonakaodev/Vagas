@@ -14,7 +14,12 @@
         <v-card>
             <v-card-text>
                 <v-col cols="12">
-                    <v-text-field v-model="name" label="Category name" required></v-text-field>
+                    <v-text-field
+                        v-model="name"
+                        label="Category name"
+                        required
+                        @keyup.enter="save()"
+                    ></v-text-field>
                 </v-col>
             </v-card-text>
             <v-card-actions>
