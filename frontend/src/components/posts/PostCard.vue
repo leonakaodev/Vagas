@@ -14,15 +14,6 @@
         <v-card-text class="text--primary">
             <div>{{ post.description }}</div>
         </v-card-text>
-
-        <v-card-actions>
-            <v-btn
-                color="orange"
-                text
-            >
-                More +
-            </v-btn>
-        </v-card-actions>
     </v-card>
 </template>
 
