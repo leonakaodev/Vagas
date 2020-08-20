@@ -21,7 +21,9 @@ module.exports = {
     }
 
     const [ count ] = await countObj.count()
-    const categories = await categoriesObj.select(['id', 'name', 'created_at', 'updated_at'])
+    const categories = await categoriesObj
+      .orderByRaw('LOWER(name)')
+      .select(['id', 'name', 'created_at', 'updated_at'])
 
     return response.json({
       totalItems: count['count(*)'],
