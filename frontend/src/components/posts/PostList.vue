@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <v-row class="header">
+    <v-container class="pa-10">
+        <v-row class="filters">
             <v-col cols="12" sm="12" md="6">
                 <v-text-field
                     v-model="search"
@@ -57,7 +57,7 @@
                 <v-icon @click="changeSort()" v-text="sortIcon" />
             </v-col>
         </v-row>
-        <v-row class="main">
+        <v-row class="content">
             <v-container fill>
                 <PostListItem
                     v-for="post in posts"
