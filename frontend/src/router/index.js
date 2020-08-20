@@ -21,7 +21,7 @@ const routes = [
             {
                 path: '/posts/search',
                 name: 'SearchPost',
-                component: () => import('../views/Search.vue')
+                component: () => import('../views/SearchPosts.vue')
             },
             {
                 path: '/posts/edit/:id',
