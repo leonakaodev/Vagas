@@ -22,7 +22,7 @@ router.post('/', celebrate({
   [Segments.BODY]: Joi.object().keys({
     title: Joi.string().required(),
     description: Joi.string(),
-    image: Joi.string(),
+    image: Joi.string().allow(''),
     categories: Joi.array()
   })
 }), PostController.create)
@@ -31,7 +31,7 @@ router.put('/:id', celebrate({
   [Segments.BODY]: Joi.object().keys({
     title: Joi.string().required(),
     description: Joi.string(),
-    image: Joi.string(),
+    image: Joi.string().allow(''),
     categories: Joi.array()
   }),
   [Segments.PARAMS]: Joi.object().keys({
