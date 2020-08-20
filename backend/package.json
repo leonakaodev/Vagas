@@ -10,13 +10,14 @@
     "db:reset": "knex migrate:rollback && knex migrate:latest",
     "lint": "eslint src/** --fix",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
-    "start": "cross-env NODE_ENV=production node src/index.js"
+    "start": "cross-env node src/index.js"
   },
   "author": "Leonardo Nakao",
   "license": "ISC",
   "dependencies": {
     "celebrate": "^12.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.21.4",
     "moment": "^2.27.0",
@@ -24,7 +25,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "dotenv": "^8.2.0",
     "eslint": "^7.6.0",
     "nodemon": "^2.0.4"
   }
