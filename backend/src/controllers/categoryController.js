@@ -1,5 +1,5 @@
 const connection = require('../database/connection')
-const { dateNow, mountIndexResponse } = require('../utils')
+const { dateNow } = require('../utils')
 
 const table = 'categories'
 
