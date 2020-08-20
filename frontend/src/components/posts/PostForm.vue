@@ -41,7 +41,7 @@
                     <p class="mb-0">
                         <CreateCategory @create="newCategory" />
                     </p>
-                    <v-select
+                    <v-autocomplete
                         v-model="form.categories"
                         :items="categoriesOptions"
                         class="mt-0 pt-0"
@@ -50,7 +50,7 @@
                         prepend-inner-icon="mdi-tag"
                         multiple
                         chips
-                    ></v-select>
+                    ></v-autocomplete>
                 </v-col>
             </v-row>
             <v-row justify="end" class="mt-4">
