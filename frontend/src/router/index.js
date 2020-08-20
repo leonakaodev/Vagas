@@ -28,6 +28,12 @@ const routes = [
                 name: 'EditPost',
                 props: true,
                 component: () => import('../views/EditPost.vue')
+            },
+            {
+                path: '/categories/list',
+                name: 'ListCategories',
+                props: true,
+                component: () => import('../views/ListCategories.vue')
             }
         ],
     }

@@ -64,6 +64,7 @@ export default {
             items: [
                 { title: 'Home', icon: 'mdi-home', to: '/' },
                 { title: 'Posts', icon: 'mdi-format-list-bulleted', to: '/posts/search' },
+                { title: 'Categories', icon: 'mdi-label', to: '/categories/list' },
             ]
         }
     }

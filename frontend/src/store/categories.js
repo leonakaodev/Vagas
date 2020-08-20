@@ -31,6 +31,9 @@ export default {
             const { data } = await axios.post('/categories', params)
             dispatch('load')
             return data
+        },
+        async delete(_, params) {
+            return await axios.delete(`/categories/${params.id}`)
         }
     }
 }

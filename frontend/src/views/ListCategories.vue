@@ -1,21 +1,21 @@
 <template>
     <v-container>
         <v-row class="d-flex justify-center align-items-center title">
-            <h1>Look our posts</h1>
+            <h1>All categories</h1>
         </v-row>
         <v-row>
-            <PostList />
+            <CategoryList />
         </v-row>
     </v-container>
 </template>
 
 <script>
-import PostList from '@/components/posts/PostList'
+import CategoryList from '@/components/categories/CategoryList'
 
 export default {
-    name: 'SearchPosts',
+    name: 'ListCategories',
     components: {
-        PostList
+        CategoryList
     }
 }
 </script>
