@@ -23,6 +23,8 @@
                     <v-text-field
                         label="Title"
                         v-model="form.title"
+                        :rules="[v => !!v || 'Title is required']"
+                        required
                         outlined
                     ></v-text-field>
                 </v-col>
@@ -30,6 +32,8 @@
                     <v-textarea
                         label="Description"
                         v-model="form.description"
+                        :rules="[v => !!v || 'Description is required']"
+                        required
                         outlined
                     ></v-textarea>
                 </v-col>
@@ -82,7 +86,7 @@ export default {
                 description: '',
                 image: '',
                 categories: []
-            }
+            },
         }
     },
     props: {
@@ -115,6 +119,9 @@ export default {
         syncWithPost(post){
             this.form = Object.assign(this.form, post)
         },
+        validate(){
+            return this.$refs.form.validate()
+        },
         ...mapActions('categories', {
             loadCategories: 'load'
         }),
@@ -124,6 +131,7 @@ export default {
         if(this.post) {
             this.syncWithPost(this.post)
         }
+        console.log(this)
     },
     watch: {
         post(value) {

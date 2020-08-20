@@ -3,7 +3,7 @@
         <v-row class="d-flex justify-center align-items-center title">
             <h1>Create a new post</h1>
         </v-row>
-        <PostForm @save="create" />
+        <PostForm ref="form" @save="create" @cancel="$router.push({ name: 'SearchPost' })" />
     </v-container>
 </template>
 
@@ -23,6 +23,7 @@ export default {
     methods: {
         async create(form){
             try {
+                if(!this.$refs.form.validate()) return
                 await this.createPost(form)
                 this.$store.commit('notifier/showMessage', {
                     content: 'Post created successfully',
@@ -30,8 +31,10 @@ export default {
                 })
                 this.$router.push('/posts/search',)
             } catch (err) {
-                let message = err.response ? err.response.data.message : err.message
-                alert('An error occurred: ' + message)
+                this.$store.commit('notifier/showMessage', {
+                    content: err.response.data.message || 'An unexpected error occurred',
+                    type: 'error'
+                })
             }
         },
         ...mapActions('posts', {

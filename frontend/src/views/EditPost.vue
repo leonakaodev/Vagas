@@ -3,7 +3,12 @@
         <v-row class="d-flex justify-center align-items-center title">
             <h1>Updating a Post</h1>
         </v-row>
-        <PostForm :post="post" @save="update" @cancel="$router.push({ name: 'SearchPost' })" />
+        <PostForm
+            ref="form"
+            :post="post"
+            @save="update"
+            @cancel="$router.push({ name: 'SearchPost' })"
+        />
     </v-container>
 </template>
 
@@ -30,6 +35,7 @@ export default {
     methods: {
         async update(form){
             try {
+                if(!this.$refs.form.validate()) return
                 await this.updatePost({
                     id: this.id,
                     post: form
@@ -40,10 +46,8 @@ export default {
                 })
                 this.$router.push('/posts/search')
             } catch (err) {
-                let message = err.response ? err.response.data.message : err.message
-
                 this.$store.commit('notifier/showMessage', {
-                    content: 'An error occurred: ' + message,
+                    content: err.response.data.message || 'An unexpected error occurred',
                     type: 'error'
                 })
             }
